@@ -16,7 +16,7 @@
 
 ## Current Phase
 
-**Phase 6 — Internet Deployment / Closed Alpha（進行中，尚未公開部署驗收）**。Railway 的 Conan TCG Closed Alpha project／production 已建立 web、server 與 Postgres；兩個 application service 已連接 [conan-tcg-online](https://github.com/kjm920605-cmd/conan-tcg-online)，指定 main。Build／start／healthcheck／migration 與非秘密 Variables 已保存，但尚無 application deployment 或公開網址；遠端 repository 仍待首次提交。獨立 HTTPS Web／WSS Server、Alpha gate、Origin policy、health/readiness、logging 與 rate limits 已有本機驗證紀錄；公開發布與跨網路驗收仍待完成。部署程序見 [Railway deployment](docs/railway-deployment.md)，實際進度與檔案清單見 [phase6-results.md](docs/phase6-results.md)。
+**Phase 6 — Internet Deployment / Closed Alpha（進行中，尚未公開部署驗收）**。Railway 的 Conan TCG Closed Alpha project／production 已建立 web、server 與 Postgres；兩個 application service 已連接 [conan-tcg-online](https://github.com/kjm920605-cmd/conan-tcg-online)，指定 main。首次來源提交 `69e5caf` 已推送至 main；Build／start／healthcheck／migration 與非秘密 Variables 已保存，但尚無 application deployment 或公開網址。獨立 HTTPS Web／WSS Server、Alpha gate、Origin policy、health/readiness、logging 與 rate limits 已有本機驗證紀錄；公開發布與跨網路驗收仍待完成。部署程序見 [Railway deployment](docs/railway-deployment.md)，實際進度與檔案清單見 [phase6-results.md](docs/phase6-results.md)。
 
 已完成的 [Phase 5B](docs/phase5b-results.md) 使用 PostgreSQL 保存匿名 session、Room／seat、Match、完整 snapshot 及 command receipt；Server process 重啟後可恢復原對局、PendingDecision、效果續行、RNG 與 RULE_BLOCKED。保留 [Phase 5A Online](docs/phase5a-results.md) 與 [Phase 4 本機模式](docs/phase4-results.md)，引擎遊戲規則與 DSL 保持不變。
 

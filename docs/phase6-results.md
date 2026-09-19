@@ -1,6 +1,6 @@
 # Phase 6 — Internet Deployment / Closed Alpha
 
-程式品質驗證紀錄：2026-09-13–14；Railway 設定進度更新：2026-09-19（Asia/Taipei）。本次續作僅修改部署設定與文件，沒有修改遊戲程式或重跑下列程式測試。
+完整程式品質驗證紀錄：2026-09-13–14；首次提交前的 Node tests／typecheck／build 重驗：2026-09-19–20；GitHub 發布進度更新：2026-09-20（Asia/Taipei）。本次續作僅修改部署設定與文件，沒有修改遊戲程式。
 
 **狀態：Railway project 與服務設定已建立；Phase 6 的公開部署／跨網路驗收尚未完成。** 已登入既有帳號，在 Conan TCG Closed Alpha 的 production 保存 web／server 設定並建立 Postgres。兩個 application service 均已連接指定 repository／main；尚未執行 application build、migration 或部署，尚無公開 URLs。本機 HTTPS/WSS 測試不等於 Internet Deployment；未升級付費方案或建立新帳號。
 
@@ -9,7 +9,7 @@
 | 項目 | 實際狀態 |
 |---|---|
 | 平台／主機／部署方式 | Railway；Conan TCG Closed Alpha／production，獨立 Web／Server Docker services，基本設定已保存、尚未部署 |
-| Source | https://github.com/kjm920605-cmd/conan-tcg-online ，兩服務指定 main；2026-09-19 `git ls-remote origin` 無 refs，已初始化本機 main／origin，243 個 source files 暫存，尚未 commit／push |
+| Source | https://github.com/kjm920605-cmd/conan-tcg-online ，兩服務指定 main；首次來源提交 `69e5caf`（243 files）已成功推送，本機 main 已追蹤 origin/main |
 | 公開 HTTPS Web URL | 尚無 |
 | 公開 WSS URL | 尚無；獨立 Server Railway generated domain 的 `/ws` |
 | Production PostgreSQL | Railway Postgres 已建立，2026-09-19 Dashboard 為 Online；尚未跑 application migration。下列 DB tests 仍是專用本機 PostgreSQL 18.6，不能代表遠端 DB 驗收 |
@@ -31,11 +31,11 @@
 
 同日 Project canvas 確認 Postgres **Online**、web／server 均為 **Service is offline**，沒有待套用變更。沒有公開遊戲服务可供驗收。
 
-web／server 均已確認 **Auto deploy is disabled**，保留 main 來源供後續手動發布；各 1 replica、Serverless Off。空 repository 的 main 尚不存在，因此 Dashboard 的 `Connected branch does not exist` 與遠端無 refs 相符；首次 push 後才可發布。手動停用 autodeploy 的操作依 [官方 GitHub autodeploys](https://docs.railway.com/deployments/github-autodeploys)。
+web／server 均已確認 **Auto deploy is disabled**，保留 main 來源供後續手動發布；各 1 replica、Serverless Off。2026-09-19 的 `Connected branch does not exist` 發生在首次 push 前；2026-09-20 已確認 Git push 成功建立遠端 main，後續部署應選實際存在的 main revision。手動停用 autodeploy 的操作依 [官方 GitHub autodeploys](https://docs.railway.com/deployments/github-autodeploys)。
 
 共同非秘密 Variables：`NODE_ENV=production`、`HOST=0.0.0.0`、`TRUST_PROXY=true`、`PROXY_IP_HEADER=X_REAL_IP`、`LOG_LEVEL=info`。Server 另有 `MATCH_STORAGE=postgres`、`DATABASE_SCHEMA=public`、`ALPHA_TRANSPORT=TICKET`、`ALPHA_TTL_SECONDS=28800`。未讀取或填入任何真實 secret。
 
-尚缺：使用者本人於 server 設定 `DATABASE_URL` reference、`SESSION_SECRET`、`ALPHA_ACCESS_SECRET`；生成 domain 後再填兩服務的 `WEB_PUBLIC_URL`／`GAME_SERVER_PUBLIC_URL` 及 server 的 exact `CORS_ORIGINS`。`PORT` 由 Railway 提供。完整目標設定仍見部署文件；`deploy/railway-settings.json` 的 `applied:false` 表示整份清單尚未完成，不能當成尚未做任何設定或已經上線。
+2026-09-20 僅核對 Variables 名稱：server 有 10 個欄位，已出現使用者新增的 `DATABASE_URL`，畫面仍有 1 個待套用變更；未讀取其值或驗證實際 DB 連線。尚缺使用者本人設定 `SESSION_SECRET`、`ALPHA_ACCESS_SECRET`；生成 domain 後再填兩服務的 `WEB_PUBLIC_URL`／`GAME_SERVER_PUBLIC_URL` 及 server 的 exact `CORS_ORIGINS`。公開 domain 尚待操作前確認。`PORT` 由 Railway 提供。完整目標設定仍見部署文件；`deploy/railway-settings.json` 的 `applied:false` 表示整份清單尚未完成，不能當成尚未做任何設定或已經上線。
 
 測試中的 `alpha.example.com`／`game.example.net` 由測試 DNS 映射到 loopback，使用短效 self-signed certificate。它们不是可分享或供外部玩家使用的遊戲網址。公開 smoke 必須使用正常 certificate verification。
 
@@ -77,7 +77,9 @@ Railway 操作程序：[railway-deployment.md](railway-deployment.md)，設計�
 
 ## Tests / quality gates
 
-以下是 2026-09-13–14 實際執行紀錄，0 failed／0 skipped；2026-09-19 僅處理 Dashboard 與文件，未重新執行此套 gates。Regression 是再跑同一套 Node tests，不重複加總為新測試。
+下表保留 2026-09-13–14 完整驗證紀錄，0 failed／0 skipped；首次提交前另外重驗的項目列於下段。Regression 是再跑同一套 Node tests，不重複加總為新測試。
+
+首次提交前另行重驗：`npm run test` **333/333**、`npm run typecheck` **PASS**、`npm run build` **PASS（116 modules）**；85 個受保護 baseline 檔案 **0 changed**。243 個暫存路徑沒有實際 `.env`、tmp／build 產物或私鑰檔；private-key／GitHub-token pattern scan 沒有命中。DB、Browser、restart 與 regression 指令未在這次提交前重跑，其結果沿用下表歷史紀錄。
 
 | Command / check | 結果 |
 |---|---|
@@ -126,7 +128,7 @@ Production E2E 使用兩個獨立 Browser Context、真正 TLS 與 PostgreSQL sc
 | 19：deployment smoke | **未執行公開 smoke** |
 | 20：cross-network Closed Alpha | **未執行** |
 
-繼續公開部署所需：提供本機 Git commit 作者（name／可用 noreply email），完成首次 commit／authenticated push，並由使用者本人在 server Variables 設定 DB reference 與兩個 secrets。Railway 已登入且能連接 repository，不再把登入或 repo 清單存取列為障礙。先前 GitHub connector 對目標 repo 只有 pull、沒有 push 權限；尚未嘗試 authenticated Git push，不宣稱遠端已同步。Generated domains 尚待建立，無需自訂 DNS。部署完成後仍需兩種實際網路的測試裝置／操作證據。
+本機 Git 作者設定與首次 authenticated push 已完成，不再列為部署障礙。繼續公開部署所需：使用者本人補齊 server 兩個 secrets，完成待套用的 DB reference；確認 generated domains 的建立後填妥公開 URL／Origin 設定，再由既有 migration flow 發布服務。Railway 已登入且能連接 repository，無需自訂 DNS。部署完成後仍需兩種實際網路的測試裝置／操作證據。
 
 ## Known limitations / protected rules
 
@@ -141,7 +143,7 @@ Production E2E 使用兩個獨立 Browser Context、真正 TLS 與 PostgreSQL sc
 
 ## 完整新增／修改檔案
 
-工作區本輪已初始化 main／origin，但尚未 commit／push。以下清單以 Phase 5B 結束為比較基準；Ignored `tmp/` 工具、測試憑證、baseline、logs 與 `dist/`／`test-results/` 不列為產品 source。既有 `.env`／`.env.test` 未替換，dependencies 與 pnpm lockfile 未變動。
+工作區已初始化 main／origin，首次來源提交 `69e5caf` 已推送。以下清單以 Phase 5B 結束為比較基準；Ignored `tmp/` 工具、測試憑證、baseline、logs 與 `dist/`／`test-results/` 不列為產品 source。既有 `.env`／`.env.test` 未替換，dependencies 與 pnpm lockfile 未變動。
 
 新增（45）：
 
