@@ -1,0 +1,47 @@
+{
+  "name": "conan-tcg-core",
+  "version": "0.3.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "scripts": {
+    "test": "node --import tsx --test tests/*.test.ts",
+    "test:regression": "node --import tsx --test tests/*.test.ts",
+    "typecheck": "tsc --noEmit",
+    "demo": "node examples/core-game.ts && node examples/explicit-rules.ts && node examples/representative-cards.ts",
+    "dev": "vite",
+    "build": "vite build",
+    "test:e2e": "node node_modules/@playwright/test/cli.js test",
+    "server": "node --env-file-if-exists=.env --import tsx apps/server/index.ts",
+    "start": "node apps/server/index.ts",
+    "start:web": "node apps/web/index.ts",
+    "db:migrate": "node --env-file-if-exists=.env --import tsx scripts/migrate.ts",
+    "test:db": "node --env-file-if-exists=.env.test --import tsx --test tests/db/*.test.ts",
+    "test:e2e:restart": "node --env-file-if-exists=.env.test node_modules/@playwright/test/cli.js test --config=playwright.persistence.config.ts",
+    "test:e2e:production": "node --env-file-if-exists=.env.test node_modules/@playwright/test/cli.js test --config=playwright.production.config.ts",
+    "smoke:deployment": "node scripts/deployment-smoke.ts"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.63.0",
+    "@types/node": "24.0.0",
+    "@types/pg": "^8.23.1",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.7",
+    "@types/ws": "^8.18.1",
+    "@vitejs/plugin-react": "^6.1.1",
+    "tsx": "^4.23.13",
+    "typescript": "5.9.3",
+    "vite": "^8.2.2"
+  },
+  "dependencies": {
+    "@noble/hashes": "^2.4.0",
+    "drizzle-orm": "^0.45.2",
+    "pg": "^8.23.0",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "ws": "^8.21.3",
+    "zod": "^4.5.4"
+  }
+}

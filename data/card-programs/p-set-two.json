@@ -1,0 +1,17 @@
+{
+  "programId": "p-set-two",
+  "program": {
+    "sourceRequirements": "FIELD_ENTRY",
+    "targetSelectionPoint": "RESOLUTION",
+    "targetZone": "FIELD",
+    "duration": "INSTANT",
+    "invalidTargetBehavior": "BLOCK",
+    "instructions": [
+      {
+        "op": "SET_CARD",
+        "target": "SOURCE",
+        "count": 2
+      }
+    ]
+  }
+}

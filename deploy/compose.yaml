@@ -1,0 +1,42 @@
+name: conan-alpha
+services:
+  game:
+    image: ${GAME_IMAGE:?Set an immutable built game image tag or digest}
+    env_file: ${SERVER_ENV_FILE:?Set the absolute path to the private production env file}
+    environment:
+      NODE_ENV: production
+      HOST: 0.0.0.0
+      PORT: "8787"
+      TRUST_PROXY: "true"
+    restart: unless-stopped
+    init: true
+    read_only: true
+    tmpfs: [/tmp]
+    security_opt: [no-new-privileges:true]
+    cap_drop: [ALL]
+    stop_grace_period: 25s
+    healthcheck:
+      test: [CMD, node, -e, "fetch('http://'+process.env.HOST+':'+process.env.PORT+'/ready').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 30s
+      timeout: 7s
+      retries: 3
+    networks: [backend]
+  proxy:
+    image: ${CADDY_IMAGE:?Set a reviewed pinned Caddy 2 image tag or digest}
+    environment:
+      PUBLIC_HOST: ${PUBLIC_HOST:?Set the DNS hostname pointed to this host}
+    ports: ["80:80", "443:443", "443:443/udp"]
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      game:
+        condition: service_healthy
+    restart: unless-stopped
+    networks: [backend]
+networks:
+  backend:
+volumes:
+  caddy_data:
+  caddy_config:

@@ -1,0 +1,48 @@
+{
+  "cardId": "F-STUN",
+  "provenance": {
+    "kind": "FIXTURE",
+    "description": "Synthetic DSL test card, not an official Conan TCG card. Stun"
+  },
+  "supportStatus": "SUPPORTED",
+  "blockedBy": [],
+  "mechanics": [
+    "ACTIVATED",
+    "STUN",
+    "ASSAULT_CASE"
+  ],
+  "unsupportedMechanics": [],
+  "definition": {
+    "definitionId": "F-STUN",
+    "printedId": "F-STUN",
+    "name": "FIXTURE Stun",
+    "recognizedNames": [
+      "Fixture Stun"
+    ],
+    "colors": [
+      "BLUE"
+    ],
+    "support": "VERIFIED_CORE",
+    "triggers": [],
+    "type": "CHARACTER",
+    "level": 0,
+    "ap": 1000,
+    "lp": 1,
+    "keywords": [
+      {
+        "kind": "ASSAULT_CASE"
+      }
+    ],
+    "declarations": [
+      {
+        "abilityId": "stun",
+        "programId": "p-stun",
+        "zones": [
+          "FIELD"
+        ],
+        "timing": "OWN_MAIN",
+        "cost": "NONE"
+      }
+    ]
+  }
+}

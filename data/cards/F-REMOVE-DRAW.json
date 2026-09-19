@@ -1,0 +1,56 @@
+{
+  "cardId": "F-REMOVE-DRAW",
+  "provenance": {
+    "kind": "FIXTURE",
+    "description": "Synthetic DSL test card, not an official Conan TCG card. Removal Draw"
+  },
+  "supportStatus": "SUPPORTED",
+  "blockedBy": [],
+  "mechanics": [
+    "ON_REMOVE",
+    "DRAW",
+    "REMOVE",
+    "RAPID"
+  ],
+  "unsupportedMechanics": [],
+  "definition": {
+    "definitionId": "F-REMOVE-DRAW",
+    "printedId": "F-REMOVE-DRAW",
+    "name": "FIXTURE Removal Draw",
+    "recognizedNames": [
+      "Fixture Removal Draw"
+    ],
+    "colors": [
+      "BLUE"
+    ],
+    "support": "VERIFIED_CORE",
+    "triggers": [
+      {
+        "event": "CHARACTER_REMOVED",
+        "player": "SELF",
+        "subject": "SOURCE",
+        "programId": "p-draw-one"
+      }
+    ],
+    "type": "CHARACTER",
+    "level": 0,
+    "ap": 1000,
+    "lp": 1,
+    "keywords": [
+      {
+        "kind": "RAPID"
+      }
+    ],
+    "declarations": [
+      {
+        "abilityId": "leave",
+        "programId": "p-remove-self",
+        "zones": [
+          "FIELD"
+        ],
+        "timing": "OWN_MAIN",
+        "cost": "NONE"
+      }
+    ]
+  }
+}

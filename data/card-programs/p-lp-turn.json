@@ -1,0 +1,17 @@
+{
+  "programId": "p-lp-turn",
+  "program": {
+    "sourceRequirements": "FIELD_ENTRY",
+    "targetSelectionPoint": "RESOLUTION",
+    "targetZone": "FIELD",
+    "duration": "UNTIL_TURN_END",
+    "invalidTargetBehavior": "BLOCK",
+    "instructions": [
+      {
+        "op": "LP_MOD",
+        "target": "SOURCE",
+        "value": 1
+      }
+    ]
+  }
+}

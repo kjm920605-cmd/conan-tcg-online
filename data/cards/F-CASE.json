@@ -1,0 +1,29 @@
+{
+  "cardId": "F-CASE",
+  "provenance": {
+    "kind": "FIXTURE",
+    "description": "Synthetic DSL test card, not an official Conan TCG card. Case"
+  },
+  "supportStatus": "SUPPORTED",
+  "blockedBy": [],
+  "mechanics": [
+    "CASE"
+  ],
+  "unsupportedMechanics": [],
+  "definition": {
+    "definitionId": "F-CASE",
+    "printedId": "F-CASE",
+    "name": "FIXTURE Case",
+    "recognizedNames": [
+      "Fixture Case"
+    ],
+    "colors": [
+      "BLUE"
+    ],
+    "support": "VERIFIED_CORE",
+    "triggers": [],
+    "type": "CASE",
+    "firstLevel": 20,
+    "secondLevel": 20
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "cardId": "F-DISGUISE",
+  "provenance": {
+    "kind": "FIXTURE",
+    "description": "Synthetic DSL test card, not an official Conan TCG card. Disguise"
+  },
+  "supportStatus": "SUPPORTED",
+  "blockedBy": [],
+  "mechanics": [
+    "DISGUISE",
+    "DRAW"
+  ],
+  "unsupportedMechanics": [],
+  "definition": {
+    "definitionId": "F-DISGUISE",
+    "printedId": "F-DISGUISE",
+    "name": "FIXTURE Disguise",
+    "recognizedNames": [
+      "Fixture Disguise"
+    ],
+    "colors": [
+      "BLUE"
+    ],
+    "support": "VERIFIED_CORE",
+    "triggers": [
+      {
+        "event": "DISGUISED",
+        "player": "SELF",
+        "subject": "SOURCE",
+        "programId": "p-draw-one"
+      }
+    ],
+    "type": "CHARACTER",
+    "level": 0,
+    "ap": 1000,
+    "lp": 1,
+    "disguise": true
+  }
+}

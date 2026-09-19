@@ -1,0 +1,38 @@
+{
+  "cardId": "F-SET",
+  "provenance": {
+    "kind": "FIXTURE",
+    "description": "Synthetic DSL test card, not an official Conan TCG card. Set Two"
+  },
+  "supportStatus": "SUPPORTED",
+  "blockedBy": [],
+  "mechanics": [
+    "ON_ENTER",
+    "SET_CARD"
+  ],
+  "unsupportedMechanics": [],
+  "definition": {
+    "definitionId": "F-SET",
+    "printedId": "F-SET",
+    "name": "FIXTURE Set Two",
+    "recognizedNames": [
+      "Fixture Set Two"
+    ],
+    "colors": [
+      "BLUE"
+    ],
+    "support": "VERIFIED_CORE",
+    "triggers": [
+      {
+        "event": "CHARACTER_ENTERED",
+        "player": "SELF",
+        "subject": "SOURCE",
+        "programId": "p-set-two"
+      }
+    ],
+    "type": "CHARACTER",
+    "level": 0,
+    "ap": 1000,
+    "lp": 1
+  }
+}

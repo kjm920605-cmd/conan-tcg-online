@@ -1,0 +1,48 @@
+{
+  "cardId": "F-AP-BOOST",
+  "provenance": {
+    "kind": "FIXTURE",
+    "description": "Synthetic DSL test card, not an official Conan TCG card. AP Boost"
+  },
+  "supportStatus": "SUPPORTED",
+  "blockedBy": [],
+  "mechanics": [
+    "ACTIVATED",
+    "AP_MOD",
+    "RAPID"
+  ],
+  "unsupportedMechanics": [],
+  "definition": {
+    "definitionId": "F-AP-BOOST",
+    "printedId": "F-AP-BOOST",
+    "name": "FIXTURE AP Boost",
+    "recognizedNames": [
+      "Fixture AP Boost"
+    ],
+    "colors": [
+      "BLUE"
+    ],
+    "support": "VERIFIED_CORE",
+    "triggers": [],
+    "type": "CHARACTER",
+    "level": 0,
+    "ap": 1000,
+    "lp": 1,
+    "keywords": [
+      {
+        "kind": "RAPID"
+      }
+    ],
+    "declarations": [
+      {
+        "abilityId": "boost",
+        "programId": "p-ap-turn",
+        "zones": [
+          "FIELD"
+        ],
+        "timing": "OWN_MAIN",
+        "cost": "NONE"
+      }
+    ]
+  }
+}

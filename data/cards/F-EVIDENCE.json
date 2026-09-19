@@ -1,0 +1,48 @@
+{
+  "cardId": "F-EVIDENCE",
+  "provenance": {
+    "kind": "FIXTURE",
+    "description": "Synthetic DSL test card, not an official Conan TCG card. Evidence"
+  },
+  "supportStatus": "SUPPORTED",
+  "blockedBy": [],
+  "mechanics": [
+    "ACTIVATED",
+    "EVIDENCE",
+    "BULLET"
+  ],
+  "unsupportedMechanics": [],
+  "definition": {
+    "definitionId": "F-EVIDENCE",
+    "printedId": "F-EVIDENCE",
+    "name": "FIXTURE Evidence",
+    "recognizedNames": [
+      "Fixture Evidence"
+    ],
+    "colors": [
+      "BLUE"
+    ],
+    "support": "VERIFIED_CORE",
+    "triggers": [],
+    "type": "CHARACTER",
+    "level": 0,
+    "ap": 1000,
+    "lp": 1,
+    "keywords": [
+      {
+        "kind": "BULLET"
+      }
+    ],
+    "declarations": [
+      {
+        "abilityId": "evidence",
+        "programId": "p-evidence-two",
+        "zones": [
+          "FIELD"
+        ],
+        "timing": "OWN_MAIN",
+        "cost": "NONE"
+      }
+    ]
+  }
+}

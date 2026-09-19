@@ -1,0 +1,18 @@
+{
+  "programId": "p-move-hand",
+  "program": {
+    "sourceRequirements": "FIELD_ENTRY",
+    "targetSelectionPoint": "RESOLUTION",
+    "targetZone": "FIELD",
+    "duration": "INSTANT",
+    "invalidTargetBehavior": "BLOCK",
+    "instructions": [
+      {
+        "op": "MOVE",
+        "target": "SOURCE",
+        "from": "FIELD",
+        "to": "HAND"
+      }
+    ]
+  }
+}

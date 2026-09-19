@@ -1,0 +1,17 @@
+{
+  "programId": "p-cut-contact",
+  "program": {
+    "sourceRequirements": "INDEPENDENT",
+    "targetSelectionPoint": "RESOLUTION",
+    "targetZone": "FIELD",
+    "duration": "UNTIL_CONTACT_END",
+    "invalidTargetBehavior": "BLOCK",
+    "instructions": [
+      {
+        "op": "AP_MOD",
+        "target": "OWN_CONTACT",
+        "value": 2000
+      }
+    ]
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "programId": "p-contact-boost",
+  "program": {
+    "sourceRequirements": "FIELD_ENTRY",
+    "targetSelectionPoint": "RESOLUTION",
+    "targetZone": "FIELD",
+    "duration": "UNTIL_CONTACT_END",
+    "invalidTargetBehavior": "BLOCK",
+    "instructions": [
+      {
+        "op": "AP_MOD",
+        "target": "SOURCE",
+        "value": 1000
+      }
+    ]
+  }
+}

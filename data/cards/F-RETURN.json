@@ -1,0 +1,42 @@
+{
+  "cardId": "F-RETURN",
+  "provenance": {
+    "kind": "FIXTURE",
+    "description": "Synthetic DSL test card, not an official Conan TCG card. Unplayable specification placeholder; missing behavior must not become a blank playable card."
+  },
+  "supportStatus": "BLOCKED",
+  "blockedBy": [
+    "RULE-QUESTION-014",
+    "RULE-QUESTION-027"
+  ],
+  "mechanics": [
+    "REENTER_FIELD"
+  ],
+  "unsupportedMechanics": [
+    {
+      "mechanic": "REENTER_FIELD",
+      "reason": "Await official ruling; no guessed program is attached.",
+      "blockedBy": [
+        "RULE-QUESTION-014",
+        "RULE-QUESTION-027"
+      ]
+    }
+  ],
+  "definition": {
+    "definitionId": "F-RETURN",
+    "printedId": "F-RETURN",
+    "name": "FIXTURE Leave and Re-enter",
+    "recognizedNames": [
+      "Fixture Leave and Re-enter"
+    ],
+    "colors": [
+      "BLUE"
+    ],
+    "support": "VERIFIED_CORE",
+    "triggers": [],
+    "type": "CHARACTER",
+    "level": 0,
+    "ap": 1000,
+    "lp": 1
+  }
+}

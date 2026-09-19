@@ -1,0 +1,28 @@
+{
+  "cardId": "F-PARTNER",
+  "provenance": {
+    "kind": "FIXTURE",
+    "description": "Synthetic DSL test card, not an official Conan TCG card. Partner"
+  },
+  "supportStatus": "SUPPORTED",
+  "blockedBy": [],
+  "mechanics": [
+    "PARTNER"
+  ],
+  "unsupportedMechanics": [],
+  "definition": {
+    "definitionId": "F-PARTNER",
+    "printedId": "F-PARTNER",
+    "name": "FIXTURE Partner",
+    "recognizedNames": [
+      "Fixture Partner"
+    ],
+    "colors": [
+      "BLUE"
+    ],
+    "support": "VERIFIED_CORE",
+    "triggers": [],
+    "type": "PARTNER",
+    "lp": 1
+  }
+}

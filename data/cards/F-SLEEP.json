@@ -1,0 +1,48 @@
+{
+  "cardId": "F-SLEEP",
+  "provenance": {
+    "kind": "FIXTURE",
+    "description": "Synthetic DSL test card, not an official Conan TCG card. Rest"
+  },
+  "supportStatus": "SUPPORTED",
+  "blockedBy": [],
+  "mechanics": [
+    "ACTIVATED",
+    "SLEEP",
+    "ASSAULT_CHARACTER"
+  ],
+  "unsupportedMechanics": [],
+  "definition": {
+    "definitionId": "F-SLEEP",
+    "printedId": "F-SLEEP",
+    "name": "FIXTURE Rest",
+    "recognizedNames": [
+      "Fixture Rest"
+    ],
+    "colors": [
+      "BLUE"
+    ],
+    "support": "VERIFIED_CORE",
+    "triggers": [],
+    "type": "CHARACTER",
+    "level": 0,
+    "ap": 1000,
+    "lp": 1,
+    "keywords": [
+      {
+        "kind": "ASSAULT_CHARACTER"
+      }
+    ],
+    "declarations": [
+      {
+        "abilityId": "rest",
+        "programId": "p-sleep",
+        "zones": [
+          "FIELD"
+        ],
+        "timing": "OWN_MAIN",
+        "cost": "NONE"
+      }
+    ]
+  }
+}

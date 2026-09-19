@@ -1,0 +1,48 @@
+{
+  "cardId": "F-SEARCH",
+  "provenance": {
+    "kind": "FIXTURE",
+    "description": "Synthetic DSL test card, not an official Conan TCG card. Incomplete draft. Draw is expressible; filtered Deck selection, reveal and shuffle are not compiled."
+  },
+  "supportStatus": "PARTIAL",
+  "blockedBy": [],
+  "mechanics": [
+    "SEARCH",
+    "DRAW"
+  ],
+  "unsupportedMechanics": [
+    {
+      "mechanic": "SEARCH_FILTERED_DECK",
+      "reason": "Requires a separately verified selection/reveal/shuffle contract. Investigate is not Search. No opcode added in Phase 3B.",
+      "blockedBy": []
+    }
+  ],
+  "definition": {
+    "definitionId": "F-SEARCH",
+    "printedId": "F-SEARCH",
+    "name": "FIXTURE Search and Draw",
+    "recognizedNames": [
+      "Fixture Search and Draw"
+    ],
+    "colors": [
+      "BLUE"
+    ],
+    "support": "VERIFIED_CORE",
+    "triggers": [],
+    "type": "CHARACTER",
+    "level": 0,
+    "ap": 1000,
+    "lp": 1,
+    "declarations": [
+      {
+        "abilityId": "known-draw-part",
+        "programId": "p-draw-one",
+        "zones": [
+          "FIELD"
+        ],
+        "timing": "OWN_MAIN",
+        "cost": "NONE"
+      }
+    ]
+  }
+}

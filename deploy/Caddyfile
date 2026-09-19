@@ -1,0 +1,18 @@
+{
+	# No HTTP access log: request paths, cookies and alpha POST bodies must not enter logs.
+	log default {
+		level ERROR
+		format filter {
+			wrap json
+			fields {
+				request delete
+			}
+		}
+	}
+}
+{$PUBLIC_HOST} {
+	reverse_proxy game:8787 {
+		header_up X-Forwarded-For {remote_host}
+		header_up X-Forwarded-Proto {scheme}
+	}
+}

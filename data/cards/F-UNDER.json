@@ -1,0 +1,38 @@
+{
+  "cardId": "F-UNDER",
+  "provenance": {
+    "kind": "FIXTURE",
+    "description": "Synthetic DSL test card, not an official Conan TCG card. Under One"
+  },
+  "supportStatus": "SUPPORTED",
+  "blockedBy": [],
+  "mechanics": [
+    "ON_ENTER",
+    "STACK_UNDER"
+  ],
+  "unsupportedMechanics": [],
+  "definition": {
+    "definitionId": "F-UNDER",
+    "printedId": "F-UNDER",
+    "name": "FIXTURE Under One",
+    "recognizedNames": [
+      "Fixture Under One"
+    ],
+    "colors": [
+      "BLUE"
+    ],
+    "support": "VERIFIED_CORE",
+    "triggers": [
+      {
+        "event": "CHARACTER_ENTERED",
+        "player": "SELF",
+        "subject": "SOURCE",
+        "programId": "p-under-one"
+      }
+    ],
+    "type": "CHARACTER",
+    "level": 0,
+    "ap": 1000,
+    "lp": 1
+  }
+}

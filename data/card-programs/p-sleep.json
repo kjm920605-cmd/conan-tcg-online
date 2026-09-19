@@ -1,0 +1,16 @@
+{
+  "programId": "p-sleep",
+  "program": {
+    "sourceRequirements": "FIELD_ENTRY",
+    "targetSelectionPoint": "RESOLUTION",
+    "targetZone": "FIELD",
+    "duration": "INSTANT",
+    "invalidTargetBehavior": "BLOCK",
+    "instructions": [
+      {
+        "op": "SLEEP",
+        "target": "SOURCE"
+      }
+    ]
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "cardId": "F-VANILLA",
+  "provenance": {
+    "kind": "FIXTURE",
+    "description": "Synthetic DSL test card, not an official Conan TCG card. Vanilla"
+  },
+  "supportStatus": "SUPPORTED",
+  "blockedBy": [],
+  "mechanics": [
+    "VANILLA"
+  ],
+  "unsupportedMechanics": [],
+  "definition": {
+    "definitionId": "F-VANILLA",
+    "printedId": "F-VANILLA",
+    "name": "FIXTURE Vanilla",
+    "recognizedNames": [
+      "Fixture Vanilla"
+    ],
+    "colors": [
+      "BLUE"
+    ],
+    "support": "VERIFIED_CORE",
+    "triggers": [],
+    "type": "CHARACTER",
+    "level": 0,
+    "ap": 1000,
+    "lp": 1
+  }
+}

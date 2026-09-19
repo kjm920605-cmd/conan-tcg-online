@@ -1,0 +1,37 @@
+{
+  "cardId": "F-CUTIN",
+  "provenance": {
+    "kind": "FIXTURE",
+    "description": "Synthetic DSL test card, not an official Conan TCG card. A deliberately over-level/off-color Cut-in fixture."
+  },
+  "supportStatus": "SUPPORTED",
+  "blockedBy": [],
+  "mechanics": [
+    "CUT_IN",
+    "AP_MOD"
+  ],
+  "unsupportedMechanics": [],
+  "definition": {
+    "definitionId": "F-CUTIN",
+    "printedId": "F-CUTIN",
+    "name": "FIXTURE Contact Cut-in",
+    "recognizedNames": [
+      "Fixture Contact Cut-in"
+    ],
+    "colors": [
+      "RED"
+    ],
+    "support": "VERIFIED_CORE",
+    "triggers": [],
+    "type": "CHARACTER",
+    "level": 99,
+    "ap": 1000,
+    "lp": 1,
+    "cutIns": [
+      {
+        "abilityId": "boost",
+        "programId": "p-cut-contact"
+      }
+    ]
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "programId": "p-evidence-two",
+  "program": {
+    "sourceRequirements": "INDEPENDENT",
+    "targetSelectionPoint": "NONE",
+    "targetZone": "NONE",
+    "duration": "INSTANT",
+    "invalidTargetBehavior": "BLOCK",
+    "instructions": [
+      {
+        "op": "GAIN_EVIDENCE",
+        "player": "SELF",
+        "count": 2
+      }
+    ]
+  }
+}

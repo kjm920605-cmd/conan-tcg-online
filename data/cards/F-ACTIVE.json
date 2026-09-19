@@ -1,0 +1,48 @@
+{
+  "cardId": "F-ACTIVE",
+  "provenance": {
+    "kind": "FIXTURE",
+    "description": "Synthetic DSL test card, not an official Conan TCG card. Wake"
+  },
+  "supportStatus": "SUPPORTED",
+  "blockedBy": [],
+  "mechanics": [
+    "ACTIVATED",
+    "ACTIVE",
+    "RAPID"
+  ],
+  "unsupportedMechanics": [],
+  "definition": {
+    "definitionId": "F-ACTIVE",
+    "printedId": "F-ACTIVE",
+    "name": "FIXTURE Wake",
+    "recognizedNames": [
+      "Fixture Wake"
+    ],
+    "colors": [
+      "BLUE"
+    ],
+    "support": "VERIFIED_CORE",
+    "triggers": [],
+    "type": "CHARACTER",
+    "level": 0,
+    "ap": 1000,
+    "lp": 1,
+    "keywords": [
+      {
+        "kind": "RAPID"
+      }
+    ],
+    "declarations": [
+      {
+        "abilityId": "wake",
+        "programId": "p-active",
+        "zones": [
+          "FIELD"
+        ],
+        "timing": "OWN_MAIN",
+        "cost": "NONE"
+      }
+    ]
+  }
+}

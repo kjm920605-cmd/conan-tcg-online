@@ -1,0 +1,48 @@
+{
+  "cardId": "F-INVESTIGATE",
+  "provenance": {
+    "kind": "FIXTURE",
+    "description": "Synthetic DSL test card, not an official Conan TCG card. Investigation"
+  },
+  "supportStatus": "SUPPORTED",
+  "blockedBy": [],
+  "mechanics": [
+    "INVESTIGATE",
+    "ACTIVATED"
+  ],
+  "unsupportedMechanics": [],
+  "definition": {
+    "definitionId": "F-INVESTIGATE",
+    "printedId": "F-INVESTIGATE",
+    "name": "FIXTURE Investigation",
+    "recognizedNames": [
+      "Fixture Investigation"
+    ],
+    "colors": [
+      "BLUE"
+    ],
+    "support": "VERIFIED_CORE",
+    "triggers": [],
+    "type": "CHARACTER",
+    "level": 0,
+    "ap": 1000,
+    "lp": 1,
+    "keywords": [
+      {
+        "kind": "INVESTIGATE_X",
+        "value": 3
+      }
+    ],
+    "declarations": [
+      {
+        "abilityId": "investigate",
+        "programId": "p-investigate",
+        "zones": [
+          "FIELD"
+        ],
+        "timing": "OWN_MAIN",
+        "cost": "NONE"
+      }
+    ]
+  }
+}

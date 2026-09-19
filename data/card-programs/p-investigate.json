@@ -1,0 +1,16 @@
+{
+  "programId": "p-investigate",
+  "program": {
+    "sourceRequirements": "FIELD_ENTRY",
+    "targetSelectionPoint": "RESOLUTION",
+    "targetZone": "FIELD",
+    "duration": "INSTANT",
+    "invalidTargetBehavior": "BLOCK",
+    "instructions": [
+      {
+        "op": "INVOKE_KEYWORD",
+        "keyword": "INVESTIGATE_X"
+      }
+    ]
+  }
+}

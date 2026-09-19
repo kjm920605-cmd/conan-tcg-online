@@ -1,0 +1,39 @@
+{
+  "cardId": "F-COMBO-CUT",
+  "provenance": {
+    "kind": "FIXTURE",
+    "description": "Synthetic DSL test card, not an official Conan TCG card. Compound Cut-in"
+  },
+  "supportStatus": "SUPPORTED",
+  "blockedBy": [],
+  "mechanics": [
+    "CUT_IN",
+    "DRAW",
+    "AP_MOD",
+    "COMPOUND"
+  ],
+  "unsupportedMechanics": [],
+  "definition": {
+    "definitionId": "F-COMBO-CUT",
+    "printedId": "F-COMBO-CUT",
+    "name": "FIXTURE Compound Cut-in",
+    "recognizedNames": [
+      "Fixture Compound Cut-in"
+    ],
+    "colors": [
+      "BLUE"
+    ],
+    "support": "VERIFIED_CORE",
+    "triggers": [],
+    "type": "CHARACTER",
+    "level": 0,
+    "ap": 1000,
+    "lp": 1,
+    "cutIns": [
+      {
+        "abilityId": "draw-boost",
+        "programId": "p-combo-cut"
+      }
+    ]
+  }
+}

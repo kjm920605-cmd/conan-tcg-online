@@ -1,0 +1,18 @@
+{
+  "programId": "p-trace-draw",
+  "program": {
+    "sourceRequirements": "INDEPENDENT",
+    "targetSelectionPoint": "NONE",
+    "targetZone": "NONE",
+    "duration": "INSTANT",
+    "invalidTargetBehavior": "BLOCK",
+    "condition": "TRACE_DISCOVERED",
+    "instructions": [
+      {
+        "op": "DRAW",
+        "player": "SELF",
+        "count": 1
+      }
+    ]
+  }
+}

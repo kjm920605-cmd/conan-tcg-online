@@ -1,0 +1,54 @@
+{
+  "cardId": "F-COMBO-ENTER",
+  "provenance": {
+    "kind": "FIXTURE",
+    "description": "Synthetic DSL test card, not an official Conan TCG card. Compound Entry"
+  },
+  "supportStatus": "SUPPORTED",
+  "blockedBy": [],
+  "mechanics": [
+    "ON_ENTER",
+    "DRAW",
+    "SET_CARD",
+    "STACK_UNDER",
+    "AP_MOD",
+    "COMPOUND",
+    "RAPID"
+  ],
+  "unsupportedMechanics": [],
+  "definition": {
+    "definitionId": "F-COMBO-ENTER",
+    "printedId": "F-COMBO-ENTER",
+    "name": "FIXTURE Compound Entry",
+    "recognizedNames": [
+      "Fixture Compound Entry"
+    ],
+    "colors": [
+      "BLUE"
+    ],
+    "support": "VERIFIED_CORE",
+    "triggers": [
+      {
+        "event": "CHARACTER_ENTERED",
+        "player": "SELF",
+        "subject": "SOURCE",
+        "programId": "p-combo-enter"
+      },
+      {
+        "event": "CONTACT_STARTED",
+        "player": "ANY",
+        "subject": "ANY",
+        "programId": "p-contact-boost"
+      }
+    ],
+    "type": "CHARACTER",
+    "level": 0,
+    "ap": 1000,
+    "lp": 1,
+    "keywords": [
+      {
+        "kind": "RAPID"
+      }
+    ]
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "programId": "p-combo-cut",
+  "program": {
+    "sourceRequirements": "INDEPENDENT",
+    "targetSelectionPoint": "RESOLUTION",
+    "targetZone": "FIELD",
+    "duration": "UNTIL_CONTACT_END",
+    "invalidTargetBehavior": "BLOCK",
+    "instructions": [
+      {
+        "op": "DRAW",
+        "player": "SELF",
+        "count": 1
+      },
+      {
+        "op": "AP_MOD",
+        "target": "OWN_CONTACT",
+        "value": 2000
+      }
+    ]
+  }
+}

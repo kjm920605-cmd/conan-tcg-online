@@ -1,0 +1,16 @@
+{
+  "programId": "p-active",
+  "program": {
+    "sourceRequirements": "FIELD_ENTRY",
+    "targetSelectionPoint": "RESOLUTION",
+    "targetZone": "FIELD",
+    "duration": "INSTANT",
+    "invalidTargetBehavior": "BLOCK",
+    "instructions": [
+      {
+        "op": "ACTIVE",
+        "target": "SOURCE"
+      }
+    ]
+  }
+}

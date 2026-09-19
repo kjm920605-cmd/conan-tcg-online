@@ -1,0 +1,17 @@
+node_modules/
+.pnpm-store/
+tmp/
+coverage/
+dist/
+.npm-cache/
+test-results/
+playwright-report/
+.env
+.env.test
+.env.production
+.env.development
+.env.web
+.env.*.local
+deploy/*.env
+deploy/secrets/
+*.key.pem

@@ -1,0 +1,48 @@
+{
+  "cardId": "F-LP-BOOST",
+  "provenance": {
+    "kind": "FIXTURE",
+    "description": "Synthetic DSL test card, not an official Conan TCG card. LP Boost"
+  },
+  "supportStatus": "SUPPORTED",
+  "blockedBy": [],
+  "mechanics": [
+    "ACTIVATED",
+    "LP_MOD",
+    "RAPID"
+  ],
+  "unsupportedMechanics": [],
+  "definition": {
+    "definitionId": "F-LP-BOOST",
+    "printedId": "F-LP-BOOST",
+    "name": "FIXTURE LP Boost",
+    "recognizedNames": [
+      "Fixture LP Boost"
+    ],
+    "colors": [
+      "BLUE"
+    ],
+    "support": "VERIFIED_CORE",
+    "triggers": [],
+    "type": "CHARACTER",
+    "level": 0,
+    "ap": 1000,
+    "lp": 1,
+    "keywords": [
+      {
+        "kind": "RAPID"
+      }
+    ],
+    "declarations": [
+      {
+        "abilityId": "boost",
+        "programId": "p-lp-turn",
+        "zones": [
+          "FIELD"
+        ],
+        "timing": "OWN_MAIN",
+        "cost": "NONE"
+      }
+    ]
+  }
+}

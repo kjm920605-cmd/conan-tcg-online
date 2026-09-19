@@ -1,0 +1,17 @@
+{
+  "programId": "p-draw-one",
+  "program": {
+    "sourceRequirements": "INDEPENDENT",
+    "targetSelectionPoint": "NONE",
+    "targetZone": "NONE",
+    "duration": "INSTANT",
+    "invalidTargetBehavior": "BLOCK",
+    "instructions": [
+      {
+        "op": "DRAW",
+        "player": "SELF",
+        "count": 1
+      }
+    ]
+  }
+}

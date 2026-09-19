@@ -1,0 +1,48 @@
+{
+  "cardId": "F-TRACE",
+  "provenance": {
+    "kind": "FIXTURE",
+    "description": "Synthetic DSL test card, not an official Conan TCG card. Trace"
+  },
+  "supportStatus": "SUPPORTED",
+  "blockedBy": [],
+  "mechanics": [
+    "TRACE",
+    "ACTIVATED",
+    "DRAW"
+  ],
+  "unsupportedMechanics": [],
+  "definition": {
+    "definitionId": "F-TRACE",
+    "printedId": "F-TRACE",
+    "name": "FIXTURE Trace",
+    "recognizedNames": [
+      "Fixture Trace"
+    ],
+    "colors": [
+      "BLUE"
+    ],
+    "support": "VERIFIED_CORE",
+    "triggers": [],
+    "type": "CHARACTER",
+    "level": 0,
+    "ap": 1000,
+    "lp": 1,
+    "keywords": [
+      {
+        "kind": "TRACE"
+      }
+    ],
+    "declarations": [
+      {
+        "abilityId": "trace",
+        "programId": "p-trace-draw",
+        "zones": [
+          "FIELD"
+        ],
+        "timing": "OWN_MAIN",
+        "cost": "NONE"
+      }
+    ]
+  }
+}

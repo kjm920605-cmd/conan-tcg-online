@@ -1,0 +1,38 @@
+{
+  "cardId": "F-FILE-PARTNER",
+  "provenance": {
+    "kind": "FIXTURE",
+    "description": "Synthetic DSL test card, not an official Conan TCG card. Unplayable specification placeholder; missing behavior must not become a blank playable card."
+  },
+  "supportStatus": "BLOCKED",
+  "blockedBy": [
+    "RULE-QUESTION-025"
+  ],
+  "mechanics": [
+    "FILE_PARTNER_ABILITY"
+  ],
+  "unsupportedMechanics": [
+    {
+      "mechanic": "FILE_PARTNER_ABILITY",
+      "reason": "Await official ruling; no guessed program is attached.",
+      "blockedBy": [
+        "RULE-QUESTION-025"
+      ]
+    }
+  ],
+  "definition": {
+    "definitionId": "F-FILE-PARTNER",
+    "printedId": "F-FILE-PARTNER",
+    "name": "FIXTURE FILE Partner Ability",
+    "recognizedNames": [
+      "Fixture FILE Partner Ability"
+    ],
+    "colors": [
+      "BLUE"
+    ],
+    "support": "VERIFIED_CORE",
+    "triggers": [],
+    "type": "PARTNER",
+    "lp": 1
+  }
+}

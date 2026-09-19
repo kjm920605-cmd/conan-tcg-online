@@ -1,0 +1,39 @@
+{
+  "cardId": "F-COMBO-REACT",
+  "provenance": {
+    "kind": "FIXTURE",
+    "description": "Synthetic DSL test card, not an official Conan TCG card. Entry Observer"
+  },
+  "supportStatus": "SUPPORTED",
+  "blockedBy": [],
+  "mechanics": [
+    "ON_ENTER",
+    "DRAW",
+    "REACT"
+  ],
+  "unsupportedMechanics": [],
+  "definition": {
+    "definitionId": "F-COMBO-REACT",
+    "printedId": "F-COMBO-REACT",
+    "name": "FIXTURE Entry Observer",
+    "recognizedNames": [
+      "Fixture Entry Observer"
+    ],
+    "colors": [
+      "BLUE"
+    ],
+    "support": "VERIFIED_CORE",
+    "triggers": [
+      {
+        "event": "CHARACTER_ENTERED",
+        "player": "SELF",
+        "subject": "ANY",
+        "programId": "p-draw-one"
+      }
+    ],
+    "type": "CHARACTER",
+    "level": 0,
+    "ap": 1000,
+    "lp": 1
+  }
+}

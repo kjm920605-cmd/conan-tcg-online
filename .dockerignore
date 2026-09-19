@@ -1,0 +1,17 @@
+.git
+.codex
+.agents
+.env*
+!.env.example
+node_modules
+tmp
+dist
+test-results
+playwright-report
+coverage
+.pnpm-store
+.npm-cache
+docs
+*.log
+deploy/*.env
+deploy/secrets

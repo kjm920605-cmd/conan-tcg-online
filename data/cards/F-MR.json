@@ -1,0 +1,58 @@
+{
+  "cardId": "F-MR",
+  "provenance": {
+    "kind": "FIXTURE",
+    "description": "Synthetic DSL test card, not an official Conan TCG card. MR"
+  },
+  "supportStatus": "SUPPORTED",
+  "blockedBy": [],
+  "mechanics": [
+    "MR",
+    "ON_REMOVE",
+    "DRAW",
+    "ACTIVATED",
+    "RAPID"
+  ],
+  "unsupportedMechanics": [],
+  "definition": {
+    "definitionId": "F-MR",
+    "printedId": "F-MR",
+    "name": "FIXTURE MR",
+    "recognizedNames": [
+      "Fixture MR"
+    ],
+    "colors": [
+      "BLUE"
+    ],
+    "support": "VERIFIED_CORE",
+    "triggers": [
+      {
+        "event": "CHARACTER_REMOVED",
+        "player": "SELF",
+        "subject": "SOURCE",
+        "programId": "p-draw-one"
+      }
+    ],
+    "type": "CHARACTER",
+    "level": 0,
+    "ap": 1000,
+    "lp": 1,
+    "mr": true,
+    "keywords": [
+      {
+        "kind": "RAPID"
+      }
+    ],
+    "declarations": [
+      {
+        "abilityId": "partner-draw",
+        "programId": "p-draw-one",
+        "zones": [
+          "PARTNER"
+        ],
+        "timing": "OWN_MAIN",
+        "cost": "NONE"
+      }
+    ]
+  }
+}

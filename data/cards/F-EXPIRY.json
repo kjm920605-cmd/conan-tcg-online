@@ -1,0 +1,40 @@
+{
+  "cardId": "F-EXPIRY",
+  "provenance": {
+    "kind": "FIXTURE",
+    "description": "Synthetic DSL test card, not an official Conan TCG card. Unplayable specification placeholder; missing behavior must not become a blank playable card."
+  },
+  "supportStatus": "BLOCKED",
+  "blockedBy": [
+    "RULE-QUESTION-023"
+  ],
+  "mechanics": [
+    "EXPIRY_TRIGGER"
+  ],
+  "unsupportedMechanics": [
+    {
+      "mechanic": "EXPIRY_TRIGGER",
+      "reason": "Await official ruling; no guessed program is attached.",
+      "blockedBy": [
+        "RULE-QUESTION-023"
+      ]
+    }
+  ],
+  "definition": {
+    "definitionId": "F-EXPIRY",
+    "printedId": "F-EXPIRY",
+    "name": "FIXTURE Expiry Recursion",
+    "recognizedNames": [
+      "Fixture Expiry Recursion"
+    ],
+    "colors": [
+      "BLUE"
+    ],
+    "support": "VERIFIED_CORE",
+    "triggers": [],
+    "type": "CHARACTER",
+    "level": 0,
+    "ap": 1000,
+    "lp": 1
+  }
+}

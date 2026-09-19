@@ -1,0 +1,36 @@
+{
+  "cardId": "F-MISLEAD",
+  "provenance": {
+    "kind": "FIXTURE",
+    "description": "Synthetic DSL test card, not an official Conan TCG card. Mislead Two"
+  },
+  "supportStatus": "SUPPORTED",
+  "blockedBy": [],
+  "mechanics": [
+    "MISLEAD"
+  ],
+  "unsupportedMechanics": [],
+  "definition": {
+    "definitionId": "F-MISLEAD",
+    "printedId": "F-MISLEAD",
+    "name": "FIXTURE Mislead Two",
+    "recognizedNames": [
+      "Fixture Mislead Two"
+    ],
+    "colors": [
+      "BLUE"
+    ],
+    "support": "VERIFIED_CORE",
+    "triggers": [],
+    "type": "CHARACTER",
+    "level": 0,
+    "ap": 1000,
+    "lp": 1,
+    "keywords": [
+      {
+        "kind": "MISLEAD_X",
+        "value": 2
+      }
+    ]
+  }
+}

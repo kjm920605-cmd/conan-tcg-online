@@ -1,0 +1,58 @@
+{
+  "cardId": "F-ACTIVATED-DRAW",
+  "provenance": {
+    "kind": "FIXTURE",
+    "description": "Synthetic DSL test card, not an official Conan TCG card. Declared Draw"
+  },
+  "supportStatus": "SUPPORTED",
+  "blockedBy": [],
+  "mechanics": [
+    "ACTIVATED",
+    "DRAW",
+    "MOVE",
+    "ASSAULT"
+  ],
+  "unsupportedMechanics": [],
+  "definition": {
+    "definitionId": "F-ACTIVATED-DRAW",
+    "printedId": "F-ACTIVATED-DRAW",
+    "name": "FIXTURE Declared Draw",
+    "recognizedNames": [
+      "Fixture Declared Draw"
+    ],
+    "colors": [
+      "BLUE"
+    ],
+    "support": "VERIFIED_CORE",
+    "triggers": [],
+    "type": "CHARACTER",
+    "level": 0,
+    "ap": 1000,
+    "lp": 1,
+    "keywords": [
+      {
+        "kind": "ASSAULT"
+      }
+    ],
+    "declarations": [
+      {
+        "abilityId": "draw",
+        "programId": "p-draw-one",
+        "zones": [
+          "FIELD"
+        ],
+        "timing": "OWN_MAIN",
+        "cost": "NONE"
+      },
+      {
+        "abilityId": "return",
+        "programId": "p-move-hand",
+        "zones": [
+          "FIELD"
+        ],
+        "timing": "OWN_MAIN",
+        "cost": "NONE"
+      }
+    ]
+  }
+}

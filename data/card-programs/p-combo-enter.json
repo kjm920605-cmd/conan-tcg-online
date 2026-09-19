@@ -1,0 +1,32 @@
+{
+  "programId": "p-combo-enter",
+  "program": {
+    "sourceRequirements": "FIELD_ENTRY",
+    "targetSelectionPoint": "RESOLUTION",
+    "targetZone": "FIELD",
+    "duration": "UNTIL_TURN_END",
+    "invalidTargetBehavior": "BLOCK",
+    "instructions": [
+      {
+        "op": "DRAW",
+        "player": "SELF",
+        "count": 1
+      },
+      {
+        "op": "SET_CARD",
+        "target": "SOURCE",
+        "count": 1
+      },
+      {
+        "op": "STACK_UNDER",
+        "target": "SOURCE",
+        "count": 1
+      },
+      {
+        "op": "AP_MOD",
+        "target": "SOURCE",
+        "value": 1000
+      }
+    ]
+  }
+}

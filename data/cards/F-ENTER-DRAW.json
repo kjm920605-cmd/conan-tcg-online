@@ -1,0 +1,38 @@
+{
+  "cardId": "F-ENTER-DRAW",
+  "provenance": {
+    "kind": "FIXTURE",
+    "description": "Synthetic DSL test card, not an official Conan TCG card. When this enters, draw one at its checkpoint."
+  },
+  "supportStatus": "SUPPORTED",
+  "blockedBy": [],
+  "mechanics": [
+    "ON_ENTER",
+    "DRAW"
+  ],
+  "unsupportedMechanics": [],
+  "definition": {
+    "definitionId": "F-ENTER-DRAW",
+    "printedId": "F-ENTER-DRAW",
+    "name": "FIXTURE Entry Draw",
+    "recognizedNames": [
+      "Fixture Entry Draw"
+    ],
+    "colors": [
+      "BLUE"
+    ],
+    "support": "VERIFIED_CORE",
+    "triggers": [
+      {
+        "event": "CHARACTER_ENTERED",
+        "player": "SELF",
+        "subject": "SOURCE",
+        "programId": "p-draw-one"
+      }
+    ],
+    "type": "CHARACTER",
+    "level": 0,
+    "ap": 1000,
+    "lp": 1
+  }
+}

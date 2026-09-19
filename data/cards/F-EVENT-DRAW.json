@@ -1,0 +1,29 @@
+{
+  "cardId": "F-EVENT-DRAW",
+  "provenance": {
+    "kind": "FIXTURE",
+    "description": "Synthetic DSL test card, not an official Conan TCG card. Draw Event"
+  },
+  "supportStatus": "SUPPORTED",
+  "blockedBy": [],
+  "mechanics": [
+    "DRAW"
+  ],
+  "unsupportedMechanics": [],
+  "definition": {
+    "definitionId": "F-EVENT-DRAW",
+    "printedId": "F-EVENT-DRAW",
+    "name": "FIXTURE Draw Event",
+    "recognizedNames": [
+      "Fixture Draw Event"
+    ],
+    "colors": [
+      "BLUE"
+    ],
+    "support": "VERIFIED_CORE",
+    "triggers": [],
+    "type": "EVENT",
+    "level": 0,
+    "programId": "p-draw-two"
+  }
+}
