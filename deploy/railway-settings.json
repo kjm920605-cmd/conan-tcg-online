@@ -4,7 +4,9 @@
   "environment": "production",
   "repository": "https://github.com/kjm920605-cmd/conan-tcg-online",
   "branch": "main",
-  "applied": false,
+  "applied": true,
+  "verifiedAt": "2026-09-20",
+  "acceptanceStatus": "PUBLIC_DEPLOYED_CROSS_NETWORK_PENDING",
   "services": {
     "web": {
       "rootDirectory": "/",
@@ -12,6 +14,8 @@
       "buildCommandOverride": null,
       "startCommand": "node apps/web/index.ts",
       "preDeployCommand": null,
+      "port": 8080,
+      "publicDomainTargetPort": 8080,
       "healthcheckPath": "/ready",
       "healthcheckTimeoutSeconds": 120,
       "replicas": 1,
@@ -25,12 +29,14 @@
       "buildCommandOverride": null,
       "startCommand": "node apps/server/index.ts",
       "preDeployCommand": "node scripts/migrate.ts",
+      "port": 8787,
+      "publicDomainTargetPort": 8787,
       "healthcheckPath": "/ready",
       "healthcheckTimeoutSeconds": 120,
       "replicas": 1,
       "serverless": false,
       "autoDeploy": false,
-      "releasePolicy": "Remove the previous server deployment and verify it stopped before deploying a selected main revision",
+      "releasePolicy": "Remove the previous server deployment and verify it stopped before any code, Variables or settings deployment; do not rely on Alt+Deploy for save-only behavior",
       "watchPaths": ["src/**", "apps/**", "packages/**", "data/**", "db/**", "scripts/**", "tests/**", "e2e/**", "examples/**", "*.json", "*.ts", "*.yaml", "Dockerfile", ".dockerignore", "deploy/**"]
     },
     "PostgreSQL": {

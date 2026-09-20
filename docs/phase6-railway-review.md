@@ -21,4 +21,4 @@ Railway Web 不向公開 server 轉寄 visitor IP，避免把未驗證 forwardin
 - Production E2E 選 action 原本只用 card label；同名實體卡造成 Playwright strict locator 錯誤。現在依 packet 內相同 label 的 action ID／順序定位，保留 disabled entries 的索引與原 gameplay assertions，未改 Engine 或卡牌。
 - 公開 smoke 支援 split origins、雙端 health/ready、first-party cookie 換 ticket、direct WSS；實際兩個 TLS process 的 E2E 會執行該 CLI，以測試 CA 信任檔驗證 TLS，不使用 NODE_TLS_REJECT_UNAUTHORIZED=0。
 - Stop-before-start 為這版單一 authority 的發布必要條件。Auto-deploy Off、1 replica、Serverless Off；不宣稱 overlap=0 單獨提供排他鎖。
-- 審查時（2026-09-13）尚無真實 Railway project；2026-09-19 已保存 project／services 基本設定，詳見 phase6-results。Public endpoints／Docker build／跨網路結果仍未完成；不能據此認定 Phase 6 COMPLETE。
+- 審查時（2026-09-13）尚無真實 Railway project；2026-09-20 兩個 Railway Docker build、公開 endpoints 與 migration 已成功。公開 UI 的 match／restart 證據見 [phase6-results.md](phase6-results.md)。真實跨網路與 edge header 防偽驗收仍待完成；不認定 Phase 6 COMPLETE。

@@ -1,6 +1,6 @@
 # Railway Closed Alpha deployment
 
-指定 repository：[kjm920605-cmd/conan-tcg-online](https://github.com/kjm920605-cmd/conan-tcg-online)，兩個 application service 均指定 `main`。既有 Conan TCG Closed Alpha project／production 已建立 `web`／`server`／`Postgres`。**2026-09-19 已保存 source、build／start／healthcheck／migration 與非秘密 Variables；尚未 application deployment、migration 或公開 endpoints。** 實際 service IDs 與剩餘步驟見 [phase6-results.md](phase6-results.md)，勿重複建立 project 或 services。
+指定 repository：[kjm920605-cmd/conan-tcg-online](https://github.com/kjm920605-cmd/conan-tcg-online)，兩個 application service 均指定 `main`。既有 Conan TCG Closed Alpha project／production 已建立 `web`／`server`／`Postgres`。**2026-09-20 兩個 Docker deployment 與既有 migration 已成功，Railway generated HTTPS／WSS endpoints 已上線；真實跨網路驗收仍待完成。** 實際 URLs、service IDs 與測試證據見 [phase6-results.md](phase6-results.md)，勿重複建立 project 或 services。
 
 ## 部署設定
 
@@ -19,7 +19,7 @@ Railway 目前官方文件指出新 service 不能啟用舊 `railway.json`／`ra
 | Auto-deploy | 第一輪 Off，手動部署同一 main revision | **Off**，受下方單一 authority 發布程序約束 |
 | Public networking | Generate Domain，HTTPS | Generate Domain，HTTPS + WSS `/ws` |
 
-Watch paths 逐項使用 `deploy/railway-settings.json` 對應清單。兩個 image 都在根目錄 typecheck，因此監看共用程式／測試／設定；不能只選 `apps/web` 或 `apps/server` 作為 build context。非根 Dockerfile 以 service variable `RAILWAY_DOCKERFILE_PATH=deploy/web.Dockerfile` 指定；server 可用 `Dockerfile`。平台從 Dockerfile build，勿另跑 Vite dev server。[官方 Dockerfiles](https://docs.railway.com/builds/dockerfiles)
+Watch paths 逐項使用 `deploy/railway-settings.json` 對應清單。兩個 image 都在根目錄 typecheck，因此監看共用程式／測試／設定；不能只選 `apps/web` 或 `apps/server` 作為 build context。本次在 Dashboard 的 Dockerfile Path 欄位設定 web 的 `deploy/web.Dockerfile`、server 的 `Dockerfile`，並已實際 build 成功。`RAILWAY_DOCKERFILE_PATH` 是替代設定方式，現有服務不需要重複新增。平台從 Dockerfile build，勿另跑 Vite dev server。[官方 Dockerfiles](https://docs.railway.com/builds/dockerfiles)
 
 Web runtime image 只有 built assets、Web host 與四個共用基礎工具檔；沒有 Engine、卡池、PostgreSQL client 或 node_modules。Server runtime 使用唯一一份原 `src/game`，沒有複製引擎。
 
@@ -31,8 +31,8 @@ Web runtime image 只有 built assets、Web host 與四個共用基礎工具檔�
 |---|---|---|
 | `NODE_ENV` | `production` | `production` |
 | `HOST` | `0.0.0.0` | `0.0.0.0` |
-| `PORT` | Railway 自動提供，domain target port 對應該 listener | Railway 自動提供，domain target port 對應該 listener |
-| `RAILWAY_DOCKERFILE_PATH` | `deploy/web.Dockerfile` | `Dockerfile` |
+| `PORT` | Railway Variables 設為 `8080`，domain target 同為 8080 | Railway Variables 設為 `8787`，domain target 同為 8787 |
+| `RAILWAY_DOCKERFILE_PATH` | 使用 Dashboard Dockerfile Path 時不需要；替代值 `deploy/web.Dockerfile` | 使用 Dashboard Dockerfile Path 時不需要；替代值 `Dockerfile` |
 | `WEB_PUBLIC_URL` | 生成的 Web HTTPS origin | 同一 Web HTTPS origin |
 | `GAME_SERVER_PUBLIC_URL` | 生成的 Server **wss** origin 加 `/ws` | 同一值 |
 | `CORS_ORIGINS` | 不需要 | 只允許 `WEB_PUBLIC_URL` 的完整 origin，無 `*` |
@@ -70,11 +70,11 @@ Web 以 edge client IP 限流，且在 Railway 模式不向公開 Server 轉寄 
 ## 首次發布與後續 restart／rollback
 
 1. 先將已通過 gates 的來源推至指定 repository `main`，記錄 commit。確認 source 不含 `.env`、tokens、私鑰、DB dump、tmp 或 build 產物。
-2. 使用既有 project／production／三個 services，核對 web/server 同 repository main 且 auto-deploy 停用；為兩者生成 Railway domain，填完公開設定。使用者在 Server Variables 設定 DB reference 與 secrets。需要先保存設定而不部署時，使用 Dashboard 的 Alt + Deploy；一般 Deploy 會同時部署受影響服務。[官方 staged changes](https://docs.railway.com/deployments/staged-changes)
+2. 使用既有 project／production／三個 services，核對 web/server 同 repository main 且 auto-deploy 停用；為兩者生成 Railway domain，填完公開設定。使用者在 Server Variables 設定 DB reference 與 secrets。官方記載 Alt + Deploy 可只保存設定，但本次瀏覽器自動操作仍觸發兩服務首次 build，原因未確認；**不可依賴快捷鍵保證不部署**。對已上線 server 套用 Variables／settings 之前，同樣必須先執行下方停止舊 deployment 的程序。[官方 staged changes](https://docs.railway.com/deployments/staged-changes)
 3. 等 PostgreSQL ready。Server pre-deploy 跑既有 version-controlled migration；成功才 start，`/ready` 必須通過。沒有新 SQL migration，不能手動重建 match tables。
 4. 發布 web 同一 commit，驗證 `/ready` 能連上 server，核對 Variables **名稱**與 deployment config，不列出秘密值。
-5. 核對 HTTPS root、server `/health`／`/ready`、exact Origin、Alpha、direct WSS。記錄 image/build 成功證據；本機環境沒有 Docker CLI，不能拿本機 Vite build 宣稱 Docker build 通過。
-6. 後續 server 發版或 rollback：**先 Remove 舊 server deployment 並確認已停止，再 deploy 選定的 main commit 或已驗證相容舊版本**。只移除運行 deployment，保留 service、database、volume、Variables。期間短暫離線，玩家按 Reconnect 使用原憑證恢復。
+5. 核對 HTTPS root、server `/health`／`/ready`、exact Origin、Alpha、direct WSS。記錄 image/build 成功證據；本次兩個 Railway Docker build 已通過，本機仍沒有 Docker CLI，未執行 portable Compose 驗收。
+6. 後續 server 發版、Variables／settings 更新或 rollback：**先 Remove 舊 server deployment 並確認 Removed、原玩家 DISCONNECTED，再 deploy 選定的 main commit 或已驗證相容舊版本**。相同版本恢復可對已停止的 deployment 選 Redeploy。只停止運行 deployment，保留 service、database、volume、Variables。期間短暫離線，玩家按 Reconnect 使用原憑證恢復。[官方 Deployment actions](https://docs.railway.com/deployments/deployment-actions)
 
 Railway 正常 healthcheck 切換會讓新 process 先啟動再退掉舊 process；一 replica 或 overlap=0 本身不能保證沒有兩個 authority。因此此版不使用自動 rolling deploy。不可使用會先啟動替代 process 的 Restart／Redeploy 流程代替明確 stop-before-start，除非已確認平台該 action 的實際停止順序。[官方 Healthchecks](https://docs.railway.com/deployments/healthchecks)
 

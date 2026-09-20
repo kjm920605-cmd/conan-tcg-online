@@ -1,20 +1,21 @@
 # Phase 6 — Internet Deployment / Closed Alpha
 
-完整程式品質驗證紀錄：2026-09-13–14；首次提交前的 Node tests／typecheck／build 重驗：2026-09-19–20；GitHub 發布進度更新：2026-09-20（Asia/Taipei）。本次續作僅修改部署設定與文件，沒有修改遊戲程式。
+完整程式品質驗證紀錄：2026-09-13–14；首次提交前的 Node tests／typecheck／build 重驗：2026-09-19–20；實際 Railway 公開部署與恢復驗證：2026-09-20（Asia/Taipei）。本次續作僅修改部署設定與文件，沒有修改遊戲程式。
 
-**狀態：Railway project 與服務設定已建立；Phase 6 的公開部署／跨網路驗收尚未完成。** 已登入既有帳號，在 Conan TCG Closed Alpha 的 production 保存 web／server 設定並建立 Postgres。兩個 application service 均已連接指定 repository／main；尚未執行 application build、migration 或部署，尚無公開 URLs。本機 HTTPS/WSS 測試不等於 Internet Deployment；未升級付費方案或建立新帳號。
+**狀態：Railway 公開部署及雙 session 對局／重啟驗證已通過；真實跨網路驗收待完成，Phase 6 不標記 COMPLETE。** Conan TCG Closed Alpha 的 production 已運行 web／server／Postgres，兩服務從同一 main revision `ab7a087` 建置。以下公開驗證使用 Railway generated URLs 與正常 TLS 憑證驗證，不使用 localhost 代替。未升級付費方案或建立新帳號。
 
 ## Deployment target / endpoints
 
 | 項目 | 實際狀態 |
 |---|---|
-| 平台／主機／部署方式 | Railway；Conan TCG Closed Alpha／production，獨立 Web／Server Docker services，基本設定已保存、尚未部署 |
-| Source | https://github.com/kjm920605-cmd/conan-tcg-online ，兩服務指定 main；首次來源提交 `69e5caf`（243 files）已成功推送，本機 main 已追蹤 origin/main |
-| 公開 HTTPS Web URL | 尚無 |
-| 公開 WSS URL | 尚無；獨立 Server Railway generated domain 的 `/ws` |
-| Production PostgreSQL | Railway Postgres 已建立，2026-09-19 Dashboard 為 Online；尚未跑 application migration。下列 DB tests 仍是專用本機 PostgreSQL 18.6，不能代表遠端 DB 驗收 |
-| 公開憑證／DNS／firewall | 尚未驗證 |
-| Public deployment smoke | 腳本已建立；沒有公開目標，尚未執行 |
+| 平台／主機／部署方式 | Railway；Conan TCG Closed Alpha／production，獨立 Web／Server Docker services，已上線 |
+| Source | [conan-tcg-online](https://github.com/kjm920605-cmd/conan-tcg-online)，兩服務指定 main；實際部署 revision `ab7a087a65ec8aedb0db847cc90d23b805d2633b` |
+| 公開 HTTPS Web URL | [Closed Alpha Web](https://web-production-48998.up.railway.app/) |
+| 公開 HTTPS Server URL | [Server health](https://server-production-ab3e.up.railway.app/health) |
+| 公開 WSS URL | `wss://server-production-ab3e.up.railway.app/ws` |
+| Production PostgreSQL | Railway Postgres Online；Server pre-deploy 記錄 `migration.applied`／`0001_persistent_matches`，之後 `server.started`、`/ready` 200。公開對局實際跨 process 恢復 |
+| 公開憑證／DNS | 兩站正常 TLS 驗證成功，HTTPS／WSS 可達；未關閉憑證驗證 |
+| Public deployment smoke | 無秘密 HTTP／admission 檢查 16/16；使用者本人 Alpha 登入後，公開 UI 完整對局／refresh／restart 通過。帶 code 的 CLI 未執行，見下方範圍 |
 | 不同 network 的 Device A／B | 尚未執行；沒有跨網路驗收證據 |
 
 ### Railway 實際設定紀錄
@@ -23,19 +24,17 @@
 
 | Service | Service ID | 已保存設定 |
 |---|---|---|
-| web | `5988bde1-9a27-40c4-af19-fd6200bcc4b8` | 根目錄 build；`deploy/web.Dockerfile`；`node apps/web/index.ts`；`/ready`／120 秒；15 個 watch paths；5 個非秘密 Variables |
-| server | `bbc10174-5293-4d0f-9430-42c60301093a` | 根目錄 build；`Dockerfile`；`node apps/server/index.ts`；pre-deploy `node scripts/migrate.ts`；`/ready`／120 秒；15 個 watch paths；9 個非秘密 Variables |
+| web | `5988bde1-9a27-40c4-af19-fd6200bcc4b8` | 根目錄 build；`deploy/web.Dockerfile`；`node apps/web/index.ts`；`/ready`／120 秒；15 個 watch paths；8 個非秘密 Variables；PORT／domain target 8080 |
+| server | `bbc10174-5293-4d0f-9430-42c60301093a` | 根目錄 build；`Dockerfile`；`node apps/server/index.ts`；pre-deploy `node scripts/migrate.ts`；`/ready`／120 秒；15 個 watch paths；16 個 Variables（含使用者設定的 DB／兩個 secrets）；PORT／domain target 8787 |
 | Postgres | `e5a67b83-a506-49f5-a698-9461c3447285` | Railway PostgreSQL service／volume；未開放 public DB TCP proxy |
 
-2026-09-19 審查 34 項 staged changes 後，以 Railway 官方支援的 **Alt + Deploy** 僅保存設定、不觸發部署；Server Deployments 顯示沒有 active deployment。這不是 application release。[Railway staged changes](https://docs.railway.com/deployments/staged-changes)
+2026-09-19 初次保存設定時，repository 尚無來源，未產生 application deployment。2026-09-20 公開 domain 已取得使用者操作前確認，實際套用公開設定時，透過自動操作送出的 Alt + Deploy 仍觸發兩個首次 Docker build；原因未確認。當時沒有舊 authoritative process，因此沒有新舊重疊。**後續不能依賴此快捷鍵保證只儲存；server 的 code／Variables／settings 變更一律先停舊部署再發布。** 官方仍記載此快捷鍵為 save-only，這裡保留觀察與文件的差異。[Railway staged changes](https://docs.railway.com/deployments/staged-changes)
 
-同日 Project canvas 確認 Postgres **Online**、web／server 均為 **Service is offline**，沒有待套用變更。沒有公開遊戲服务可供驗收。
+web／server 均已確認 **Auto deploy is disabled**，保留 main 來源供手動發布；各 1 replica、Serverless Off。Dockerfile Path 使用 Dashboard 欄位，沒有另外新增 `RAILWAY_DOCKERFILE_PATH`。首次 web deployment：`0eb6a6f5-ec78-438f-a304-de063fbfebe9`；首次 server deployment：`709729d0-1e44-4623-a22c-180cbb2e90e2`。實際部署的 Details 連到 GitHub revision `ab7a087`。[官方 GitHub autodeploys](https://docs.railway.com/deployments/github-autodeploys)
 
-web／server 均已確認 **Auto deploy is disabled**，保留 main 來源供後續手動發布；各 1 replica、Serverless Off。2026-09-19 的 `Connected branch does not exist` 發生在首次 push 前；2026-09-20 已確認 Git push 成功建立遠端 main，後續部署應選實際存在的 main revision。手動停用 autodeploy 的操作依 [官方 GitHub autodeploys](https://docs.railway.com/deployments/github-autodeploys)。
+共同非秘密 Variables：`NODE_ENV=production`、`HOST=0.0.0.0`、`TRUST_PROXY=true`、`PROXY_IP_HEADER=X_REAL_IP`、`LOG_LEVEL=info`、`WEB_PUBLIC_URL`、`GAME_SERVER_PUBLIC_URL` 與對應的 `PORT`。Server 另有 `MATCH_STORAGE=postgres`、`DATABASE_SCHEMA=public`、`ALPHA_TRANSPORT=TICKET`、`ALPHA_TTL_SECONDS=28800`、exact Web origin 的 `CORS_ORIGINS`。Application 仍讀取環境 PORT／URL，沒有將實際 domain 寫入程式。
 
-共同非秘密 Variables：`NODE_ENV=production`、`HOST=0.0.0.0`、`TRUST_PROXY=true`、`PROXY_IP_HEADER=X_REAL_IP`、`LOG_LEVEL=info`。Server 另有 `MATCH_STORAGE=postgres`、`DATABASE_SCHEMA=public`、`ALPHA_TRANSPORT=TICKET`、`ALPHA_TTL_SECONDS=28800`。未讀取或填入任何真實 secret。
-
-2026-09-20 僅核對 Variables 名稱：server 有 10 個欄位，已出現使用者新增的 `DATABASE_URL`，畫面仍有 1 個待套用變更；未讀取其值或驗證實際 DB 連線。尚缺使用者本人設定 `SESSION_SECRET`、`ALPHA_ACCESS_SECRET`；生成 domain 後再填兩服務的 `WEB_PUBLIC_URL`／`GAME_SERVER_PUBLIC_URL` 及 server 的 exact `CORS_ORIGINS`。公開 domain 尚待操作前確認。`PORT` 由 Railway 提供。完整目標設定仍見部署文件；`deploy/railway-settings.json` 的 `applied:false` 表示整份清單尚未完成，不能當成尚未做任何設定或已經上線。
+使用者本人已設定 `DATABASE_URL`、`SESSION_SECRET`、`ALPHA_ACCESS_SECRET` 並在公開 Web 完成 Alpha 登入。僅核對 masked Variables 名稱，未讀取或代填秘密值；web 沒有 DB／signing／access secrets。`deploy/railway-settings.json` 的 `applied:true` 表示 Dashboard 設定與實際部署已核對，**不表示跨網路驗收完成**。Manifest／範例仍不含實際 domain 或秘密。
 
 測試中的 `alpha.example.com`／`game.example.net` 由測試 DNS 映射到 loopback，使用短效 self-signed certificate。它们不是可分享或供外部玩家使用的遊戲網址。公開 smoke 必須使用正常 certificate verification。
 
@@ -94,8 +93,8 @@ Railway 操作程序：[railway-deployment.md](railway-deployment.md)，設計�
 | `npm run build` | PASS，116 modules；production assets 不含 Local／Engine |
 | `node scripts/test-caddy-redaction.ts`，指定 `CADDY_BIN` | PASS，實際 Caddy 2.10.2，502 與 error diagnostics 保留，query／header canaries 不在 log |
 | 受保護 baseline SHA-256 比對 | **85 files、0 changed** |
-| Docker build / Compose run | 未執行；此環境沒有 Docker CLI |
-| `npm run smoke:deployment`（公開目標） | 未執行；Railway URLs 尚未建立。相同 CLI 已在本機雙 TLS process E2E 中通過 |
+| Docker build / Compose run | 2026-09-20 兩個 Railway Docker build／runtime PASS；本機沒有 Docker CLI，portable Compose 未執行 |
+| `npm run smoke:deployment`（公開目標） | 未執行帶 code 的 CLI，避免取得使用者秘密；相同 CLI 曾在本機雙 TLS process E2E 通過。本次公開無秘密檢查與登入後 UI 驗證另列如下 |
 | Cross-network Closed Alpha | 未執行 |
 
 新增 Node tests：原部署層 35 + Railway Web 13、ticket 4、client 3、proxy IP 4、expiry 2，共 **61**；原 **272** 項保留。DB 新增 readiness 1 項，原 23 項保留。Browser 原 12 項保留，production 共 3 項，合計 15 項。Proxy redaction 是另行執行的本機 integration check。
@@ -104,7 +103,28 @@ Local 初次冷啟動曾在原五秒 handoff assertion 失敗；trace 顯示 dyn
 
 本輪沙箱內重跑再次出現初次 handoff 冷載入逾時，且 Playwright 無法退出它建立的測試服務。停止已確認的兩個測試 process、在沙箱外執行原套件後 8/8、exit 0；未再修改 warmup／UI／Engine 或放寬 assertion。此環境的 cold dev loading 仍可能受檔案存取延遲影響；正式 built Web tests 另行驗證。Railway review 的 expiry／proxy IP 問題、RED→GREEN 證據見 [phase6-railway-review.md](phase6-railway-review.md)。
 
-## Restart / reconnect evidence
+## Railway public validation — 2026-09-20
+
+使用真正 Railway endpoints、正常 TLS 驗證，無本機 DNS 對映、測試 CA 或 server response stub。
+
+無秘密公開檢查 **16/16、exit 0**：Web／Server `/health`、`/live`、`/ready` 共六項；Web HTML、built assets、HSTS／正確 WSS CSP；public config 僅四個公開欄位；匿名 Alpha GET；雙站錯 Origin 拒絕且無 wildcard CORS；Server exact Web origin preflight；錯 code 401；無 cookie ticket 401；無 ticket WSS 401／錯 Origin WSS 403。檢查工具放在 ignored `tmp/phase6/railway-public-check.mjs`，沒有讀取真實 secret 或改變對局。
+
+使用者親自在公開 Web Alpha 表單登入後，以同一瀏覽器的兩個獨立匿名玩家分頁進行下列操作。**這是兩個 session，並非兩台裝置或不同網路。** Room `AAF561F6`；Dashboard allowlisted logs 顯示 match `954c6b53-db49-47a4-b4dc-eb02d94e0dc0`。
+
+| 公開流程 | 證據／結果 |
+|---|---|
+| Alpha → direct WSS → Create／Join → Ready | A／B 均 CONNECTED，固定座位、各自手牌與對手 Hidden card |
+| Mulligan 待決策 → Server stop → redeploy → Reconnect | Version 1；A 已選一張換牌，B 待 Mulligan。兩方 seat／room／version／完整可見牌桌／decision panel 字串逐欄一致，B 同 owner 與五個原選項 |
+| 出牌／推理／多回合 → Browser B reload | Version 12；B 原 seat／room／version／可見投影完全相同 |
+| 進行中回合 → Server stop → redeploy → Reconnect | Version 12；A／B 可見投影與版本逐欄一致，繼續操作至版本 36 |
+| 完整 FIXTURE 對局 | Version 36，FINISHED，B 勝利／EMPTY_DECK，無可用 gameplay 操作 |
+| Finished → Server stop → redeploy → Reconnect | Server replacement 已 Active；Alpha 到期要求使用者重新登入，最終投影比對暫待完成，不能先計為 PASS |
+
+三次重啟都先對舊 deployment 選 Remove，確認 Removed／兩方 DISCONNECTED，再對已停止版本 Redeploy；保留 DB、volume、Variables。替代 deployments 依序為 `b002d4d7-26ef-4695-8af5-1888e54f70f4`（待決策恢復）、`3c19646c-abd7-4f97-9fc7-4509ccdb4664`（回合中恢復）、`2d2cc357-97fa-46c3-912f-7a2471201b38`（最終結果恢復，現行 Active）。未同時運行兩個 authority。
+
+此次公開 Browser 比對以 DOM 可見內容為界，未讀取 hidden application state、cookie／resume token、DB credential 或完整 snapshot。公開 decisionId、RNG cursor、完整 durable snapshot、跨 restart 重送相同 commandId 與 `MATCH_FINISHED` 原始封包拒絕，沒有在本輪另行驗證；其證據沿用下方本機 DB／production E2E，不能宣稱已在 Railway 全部重跑。沒有因 browser 的 property insertion order 導致 JSON 字串不同而判定 state 差異：最終使用逐欄內容相等比較。
+
+## Historical local restart / reconnect evidence
 
 Production E2E 使用兩個獨立 Browser Context、真正 TLS 與 PostgreSQL schema，啟動 `apps/server/index.ts` 的 production process（Node 原生 TypeScript），沒有 Vite proxy 或合成 server response。
 
@@ -113,35 +133,37 @@ Production E2E 使用兩個獨立 Browser Context、真正 TLS 與 PostgreSQL sc
 
 原 Phase 5B 四項 browser restart 流程另行全通過。DB suite 同時覆蓋 PendingEffects、續行、effect cursor、RULE_BLOCKED、version mismatch、missing／corrupt／invalid snapshots、真實 transaction rollback 與 unavailable DB；失敗不發成功 ACK／view、不替換 Match、不多耗 RNG。
 
-公開平台的 TLS termination、production DB、idle timeout／proxy restart、跨網路重連仍須在實際部署後執行上述流程，不能由本機結果代替。
+Railway 的 TLS、production DB 與實際部署替換後恢復已有上方公開證據；不同網路重連、長時間 idle／proxy timeout、edge IP 防偽與全部 raw-protocol assertions 仍未完成，不以本機結果代替。
 
 ## Acceptance status
 
 | 使用者 acceptance criteria | 狀態 |
 |---|---|
-| 1–3：公開 HTTPS、公開 WSS、不同 network 同 Room | **待部署／跨網路證據** |
-| 4：完整 Online FIXTURE Match | 本機 production-like PASS；公開驗收待執行 |
-| 5–10：authority、privacy、persistence、restart、reconnect、idempotency | 本機完整 regression／DB／Browser PASS；公開驗收待執行 |
-| 11–16：Alpha、secrets、CORS、health、rate、logging | 程式／本機 integration PASS；目標環境設定仍待驗證 |
+| 1–3：公開 HTTPS、公開 WSS、不同 network 同 Room | HTTPS／WSS PASS；**不同 network 待人工驗收** |
+| 4：完整 Online FIXTURE Match | 公開雙 session PASS（version 36／B 勝利） |
+| 5–10：authority、privacy、persistence、restart、reconnect、idempotency | 本機完整 regression／DB／Browser PASS；公開座位／私密 UI／待決策及回合中 restart／refresh PASS。公開 raw idempotency／完整 snapshot 未重跑 |
+| 11–16：Alpha、secrets、CORS、health、rate、logging | 公開 Alpha／exact CORS／health／masked Variables／migration/start/resume logs PASS；edge IP 防偽與跨網路 quota 尚未驗收 |
 | 17：所有既有 tests | PASS |
-| 18：production build | Web build PASS；Docker artifact 未執行 |
-| 19：deployment smoke | **未執行公開 smoke** |
+| 18：production build | Web build 與兩個 Railway Docker deployments PASS |
+| 19：deployment smoke | 公開無秘密檢查 16/16 + 登入後 UI/WSS/match PASS；未執行需操作員秘密的 CLI |
 | 20：cross-network Closed Alpha | **未執行** |
 
-本機 Git 作者設定與首次 authenticated push 已完成，不再列為部署障礙。繼續公開部署所需：使用者本人補齊 server 兩個 secrets，完成待套用的 DB reference；確認 generated domains 的建立後填妥公開 URL／Origin 設定，再由既有 migration flow 發布服務。Railway 已登入且能連接 repository，無需自訂 DNS。部署完成後仍需兩種實際網路的測試裝置／操作證據。
+部署、Git 作者／push、使用者 secrets 設定與 generated domains 均已完成，不再列為障礙。剩餘人工驗收：Device A 電腦 Wi-Fi 與 Device B 手機 5G／不同網路，使用上述 Web URL，完成 Alpha → Create／Join → Ready → gameplay → reload／Reconnect → continue → finish；另於 active match 依 stop-before-start 重啟 Server，恢復同局後繼續。記錄日期、網路、room、座位、版本與結果；未取得這些實際證據前不標記 COMPLETE。通行碼只能在公開 Web 表單由本人輸入，不要貼在報告或 Chat。
 
 ## Known limitations / protected rules
 
-- Phase 6 尚未達成 Internet acceptance；無可供外部玩家使用的公開網址。
-- Docker／Compose 模板尚未在容器主機 build/run；Caddy 2.10.2 的本機 log check 不等於公開憑證或容器 image 驗收。
+- Phase 6 已有公開網址與雙 session 驗證，但尚未達成真實跨網路 acceptance。
+- Railway Docker build/run 已通過；portable Compose 仍未執行，Caddy 本機 log check 不等於 Railway edge 設定驗收。
 - Split origins／同 origin 兩種 transport、單 process authority；無 distributed rate limits、Redis、multi-server failover 或 rolling deployment。IP rate windows 共用於同 NAT，server restart 清除 buckets。Railway 模式 Server Alpha quotas 共用 Web egress（10 code／30 ticket per minute），Web 另依 edge visitor IP 限流；不信任任意 forwarding claim。
-- Railway 設定清單是 Dashboard 人工核對資料，基本設定已手動保存，尚未完成 Variables／networking／release。官方新 services 不能使用舊 Config as Code，未建立誤導性的 railway.json。Server auto-deploy 已確認 disabled；舊 deployment 停止後才啟動新版本，不能把 1 replica／overlap=0 當作 DB 排他鎖。
+- Railway 設定清單是 Dashboard 人工核對資料，Variables／networking／release 已完成；不是自動載入的 Config as Code。Server auto-deploy disabled；所有 code／settings／Variables 發布必須先停舊 process，不依賴 Alt+Deploy 或把 1 replica／overlap=0 當成 DB 排他鎖。
 - Alpha 使用共享 code，不含正式 account 或逐人撤銷；secret 輪替要求重新驗 gate，原 resume credentials 可續用。匿名 sessionStorage 遺失仍無 account recovery。
 - 沿用 Phase 5B 的無 retention／GC／snapshot migration／online replay 服務限制；snapshot storage 尚未優化。只用既有 FIXTURE cards。
 - **RQ-002、RQ-009、RQ-012、RQ-013、RQ-014、RQ-023、RQ-025、RQ-027 全部維持 BLOCKING。** 規則、RNG、Effect timing、serialization 語義未修改；RULE_BLOCKED 仍在相同 boundary 保存／恢復。
 - 沒有進入 Account、Ranking、Matchmaking、Deck Builder、正式卡池、Social 或 Payment。
 
 ## 完整新增／修改檔案
+
+2026-09-20 公開部署續作修改七個既有檔案，沒有新增產品程式：`README.md`、`docs/phase6-results.md`、`docs/railway-deployment.md`、`docs/phase6-railway-review.md`、`deploy/railway-settings.json`、`.env.example`、`.env.web.example`。變更為實際部署／恢復證據、PORT 設定說明與發布程序；85 個受保護 Engine／rules／cards 檔案 SHA-256 再核對為 0 changed。JSON parse 與 `git diff --check` 通過。未因文件更新重跑整套 tests，沿用相同程式 revision 的前述結果。
 
 工作區已初始化 main／origin，首次來源提交 `69e5caf` 已推送。以下清單以 Phase 5B 結束為比較基準；Ignored `tmp/` 工具、測試憑證、baseline、logs 與 `dist/`／`test-results/` 不列為產品 source。既有 `.env`／`.env.test` 未替換，dependencies 與 pnpm lockfile 未變動。
 
@@ -188,7 +210,7 @@ Production E2E 使用兩個獨立 Browser Context、真正 TLS 與 PostgreSQL sc
 | `tests/railway-expiry.test.ts` | 2 個 idle／DB-delayed expiry tests |
 | `e2e/production/railway-split.spec.ts` | 分站 TLS／WSS／smoke／restart／finished E2E |
 | `deploy/web.Dockerfile` | 不含 Engine／DB runtime 的 Web image |
-| `deploy/railway-settings.json` | Dashboard 目標設定清單；基本設定已保存，完整發布尚未驗收 |
+| `deploy/railway-settings.json` | Dashboard 已核對設定、PORT／target ports、停止後發布政策；跨網路仍待驗收 |
 | `.env.web.example` | Web-only public placeholders |
 | `docs/railway-deployment.md` | Railway 操作／Variables／發布／驗收程序 |
 | `docs/phase6-railway-plan.md` | Railway integration 計畫 |
