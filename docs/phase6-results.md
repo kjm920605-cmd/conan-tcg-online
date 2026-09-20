@@ -118,11 +118,13 @@ Local 初次冷啟動曾在原五秒 handoff assertion 失敗；trace 顯示 dyn
 | 出牌／推理／多回合 → Browser B reload | Version 12；B 原 seat／room／version／可見投影完全相同 |
 | 進行中回合 → Server stop → redeploy → Reconnect | Version 12；A／B 可見投影與版本逐欄一致，繼續操作至版本 36 |
 | 完整 FIXTURE 對局 | Version 36，FINISHED，B 勝利／EMPTY_DECK，無可用 gameplay 操作 |
-| Finished → Server stop → redeploy → Reconnect | Server replacement 已 Active；Alpha 到期要求使用者重新登入，最終投影比對暫待完成，不能先計為 PASS |
+| Finished → Server stop → redeploy → Reconnect | PASS；Alpha 到期後使用者本人重新登入，A／B 以原 session 回到同房間、原座位、version 36。雙方可見牌桌／decision panel 與重啟前逐欄完全一致，仍為 B 勝利／EMPTY_DECK，兩方皆無可用 gameplay 操作 |
 
 三次重啟都先對舊 deployment 選 Remove，確認 Removed／兩方 DISCONNECTED，再對已停止版本 Redeploy；保留 DB、volume、Variables。替代 deployments 依序為 `b002d4d7-26ef-4695-8af5-1888e54f70f4`（待決策恢復）、`3c19646c-abd7-4f97-9fc7-4509ccdb4664`（回合中恢復）、`2d2cc357-97fa-46c3-912f-7a2471201b38`（最終結果恢復，現行 Active）。未同時運行兩個 authority。
 
 此次公開 Browser 比對以 DOM 可見內容為界，未讀取 hidden application state、cookie／resume token、DB credential 或完整 snapshot。公開 decisionId、RNG cursor、完整 durable snapshot、跨 restart 重送相同 commandId 與 `MATCH_FINISHED` 原始封包拒絕，沒有在本輪另行驗證；其證據沿用下方本機 DB／production E2E，不能宣稱已在 Railway 全部重跑。沒有因 browser 的 property insertion order 導致 JSON 字串不同而判定 state 差異：最終使用逐欄內容相等比較。
+
+Alpha 重新驗證沒有建立新 Room 或替代 Match；原完成對局仍保留。公開 UI 沒有 finished gameplay 按鈕，因此本次只確認結果可讀與 UI 不再提供操作，不將其等同於原始協議 `MATCH_FINISHED` 拒絕測試。
 
 ## Historical local restart / reconnect evidence
 
@@ -141,7 +143,7 @@ Railway 的 TLS、production DB 與實際部署替換後恢復已有上方公開
 |---|---|
 | 1–3：公開 HTTPS、公開 WSS、不同 network 同 Room | HTTPS／WSS PASS；**不同 network 待人工驗收** |
 | 4：完整 Online FIXTURE Match | 公開雙 session PASS（version 36／B 勝利） |
-| 5–10：authority、privacy、persistence、restart、reconnect、idempotency | 本機完整 regression／DB／Browser PASS；公開座位／私密 UI／待決策及回合中 restart／refresh PASS。公開 raw idempotency／完整 snapshot 未重跑 |
+| 5–10：authority、privacy、persistence、restart、reconnect、idempotency | 本機完整 regression／DB／Browser PASS；公開座位／私密 UI／待決策、回合中及 finished restart／refresh PASS。公開 raw idempotency／完整 snapshot 未重跑 |
 | 11–16：Alpha、secrets、CORS、health、rate、logging | 公開 Alpha／exact CORS／health／masked Variables／migration/start/resume logs PASS；edge IP 防偽與跨網路 quota 尚未驗收 |
 | 17：所有既有 tests | PASS |
 | 18：production build | Web build 與兩個 Railway Docker deployments PASS |
